@@ -1,0 +1,31 @@
+<h2>💰 Presupuesto Mensual</h2>
+<div>
+  <input type="text" id="gastoNombre" placeholder="Descripción del gasto" />
+  <input type="number" id="gastoMonto" placeholder="Monto ($)" />
+  <button onclick="agregarGasto()">Agregar gasto</button>
+</div>
+<ul id="listaGastos"></ul>
+<h4>Total: $<span id="totalGastos">0</span></h4>
+
+<script>
+  let total = 0;
+
+  function agregarGasto() {
+    const nombre = document.getElementById("gastoNombre").value.trim();
+    const monto = parseFloat(document.getElementById("gastoMonto").value);
+
+    if (nombre && !isNaN(monto)) {
+      const li = document.createElement("li");
+      li.textContent = `${nombre}: $${monto.toFixed(2)}`;
+      document.getElementById("listaGastos").appendChild(li);
+
+      total += monto;
+      document.getElementById("totalGastos").textContent = total.toFixed(2);
+
+      document.getElementById("gastoNombre").value = "";
+      document.getElementById("gastoMonto").value = "";
+    } else {
+      alert("Rellena todos los campos correctamente.");
+    }
+  }
+</script>

@@ -1,0 +1,25 @@
+<h2>📚 Lista de Lectura</h2>
+<div>
+  <input type="text" id="libroNombre" placeholder="Título del libro" />
+  <input type="text" id="autorNombre" placeholder="Autor" />
+  <button onclick="agregarLibro()">Agregar</button>
+</div>
+<ul id="listaLectura"></ul>
+
+<script>
+  function agregarLibro() {
+    const libro = document.getElementById("libroNombre").value.trim();
+    const autor = document.getElementById("autorNombre").value.trim();
+
+    if (libro && autor) {
+      const li = document.createElement("li");
+      li.textContent = `📖 "${libro}" por ${autor}`;
+      document.getElementById("listaLectura").appendChild(li);
+
+      document.getElementById("libroNombre").value = "";
+      document.getElementById("autorNombre").value = "";
+    } else {
+      alert("Rellena todos los campos.");
+    }
+  }
+</script>

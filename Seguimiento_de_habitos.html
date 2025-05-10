@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Seguimiento de Hábitos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .habit {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 15px;
+      margin-top: 10px;
+      background-color: #fff;
+    }
+
+    .habit h3 {
+      margin: 0 0 10px 0;
+    }
+
+    .progreso {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seguimiento de Hábitos</h1>
+
+  <div>
+    <input type="text" id="nombreHabito" placeholder="Nombre del hábito" />
+    <button onclick="agregarHabito()">Agregar hábito</button>
+  </div>
+
+  <div>
+    <input type="text" id="habitoProgreso" placeholder="Nombre del hábito" />
+    <input type="date" id="fechaProgreso" />
+    <button onclick="registrarProgreso()">Registrar progreso</button>
+  </div>
+
+  <div id="listaHabitos"></div>
+
+  <script>
+    const habitos = {};
+
+    function agregarHabito() {
+      const nombre = document.getElementById("nombreHabito").value.trim();
+      if (nombre && !habitos[nombre]) {
+        habitos[nombre] = [];
+        mostrarHabitos();
+        alert(`Hábito '${nombre}' agregado.`);
+      } else {
+        alert("El hábito ya existe o el nombre está vacío.");
+      }
+    }
+
+    function registrarProgreso() {
+      const nombre = document.getElementById("habitoProgreso").value.trim();
+      const fecha = document.getElementById("fechaProgreso").value;
+
+      if (!habitos[nombre]) {
+        alert("Ese hábito no existe. Agrégalo primero.");
+        return;
+      }
+
+      if (fecha) {
+        habitos[nombre].push(fecha);
+        mostrarHabitos();
+        alert(`Progreso registrado para '${nombre}' el ${fecha}.`);
+      } else {
+        alert("Selecciona una fecha válida.");
+      }
+    }
+
+    function mostrarHabitos() {
+      const lista = document.getElementById("listaHabitos");
+      lista.innerHTML = "";
+
+      for (const [nombre, fechas] of Object.entries(habitos)) {
+        const div = document.createElement("div");
+        div.className = "habit";
+        div.innerHTML = `
+          <h3>${nombre}</h3>
+          <div class="progreso">
+            Fechas registradas: ${fechas.length > 0 ? fechas.join(", ") : "Sin registros aún"}
+          </div>
+        `;
+        lista.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>
